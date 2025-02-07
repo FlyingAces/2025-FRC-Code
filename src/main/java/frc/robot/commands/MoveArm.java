@@ -14,7 +14,7 @@ public class MoveArm extends Command {
     
     private Direction _dir;
     public MoveArm(Direction dir){
-        _dir = dir;
+        _dir = dir; 
     }
 
     @Override
