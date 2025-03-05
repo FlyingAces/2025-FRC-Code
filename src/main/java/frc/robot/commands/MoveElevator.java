@@ -1,19 +1,19 @@
 package frc.robot.commands;
 
-import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.ElevatorSubsystem;
 
 import edu.wpi.first.wpilibj2.command.Command;
 
 
 
-public class MoveArm extends Command {
+public class MoveElevator extends Command {
     public static enum Direction {
         UP,
         DOWN
     }
     
     private Direction _dir;
-    public MoveArm(Direction dir){
+    public MoveElevator(Direction dir){
         _dir = dir; 
     }
 
@@ -21,17 +21,17 @@ public class MoveArm extends Command {
     public void initialize() {
         switch(_dir) {
             case UP:
-                ArmSubsystem.getInstance().moveUp();
+                ElevatorSubsystem.getInstance().moveUp();
                 break;
             case DOWN:
-                ArmSubsystem.getInstance().moveDown();
+                ElevatorSubsystem.getInstance().moveDown();
                 break;
         }
     }
     
     @Override
     public void end(boolean interrupted){
-        ArmSubsystem.getInstance().stopArm();
+        ElevatorSubsystem.getInstance().stopArm();
     }
 
    // @Override

@@ -105,7 +105,7 @@ public class SwerveModule {
 
     private void configAngleMotor(){
         mAngleMotor.getConfigurator().apply(Robot.ctreConfigs.swerveAngleFXConfig);
-        //resetToAbsolute();
+        //resetToAbsolute(); //// MIGHT NEED TO COMMENT IN/OUT
     }
 
     private void configDriveMotor(){
@@ -128,6 +128,7 @@ public class SwerveModule {
     }
 
     public void resetAngle(){
-        mAngleMotor.setPosition(0);
+        //mAngleMotor.setPosition(0);
+        resetToAbsolute(); // ---------------- 2/22/25 Brenden and Jacob want to try this first, to correctly position motors
     }
 }

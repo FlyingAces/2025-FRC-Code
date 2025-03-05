@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.autos.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
-import frc.robot.commands.Intake;
 
 
 /**
@@ -36,6 +35,10 @@ public class RobotContainer {
 
     private final JoystickButton intake = new JoystickButton(driver, XboxController.Button.kA.value);
     private final JoystickButton Output = new JoystickButton(driver, XboxController.Button.kB.value);
+
+    /*public static Trigger triggerButton(XboxController controller, XboxController.Axis axis) {
+     * return new Trigeer(()-> controller.getRawAxis(axis.value) >= 0.5);
+    } added on March 4, 2025*/
 
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
@@ -66,8 +69,8 @@ public class RobotContainer {
     private void configureButtonBindings() {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
-        moveUp.whileTrue(new MoveArm(MoveArm.Direction.UP));
-        moveDown.whileTrue(new MoveArm(MoveArm.Direction.DOWN));
+        moveUp.whileTrue(new MoveElevator(MoveElevator.Direction.UP));
+        moveDown.whileTrue(new MoveElevator(MoveElevator.Direction.DOWN));
         intake.whileTrue(new Intake(Intake.Direction.IN));
         Output.whileTrue(new Intake(Intake.Direction.OUT));       
     }

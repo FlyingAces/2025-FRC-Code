@@ -22,8 +22,8 @@ public final class CTREConfigs {
         CurrentLimitsConfigs angleCurrentLimits = swerveAngleFXConfig.CurrentLimits;
         angleCurrentLimits.SupplyCurrentLimitEnable = Constants.Swerve.angleEnableCurrentLimit;
         angleCurrentLimits.SupplyCurrentLimit = Constants.Swerve.angleCurrentLimit;
-       // angleCurrentLimits.SupplyCurrentThreshold = Constants.Swerve.angleCurrentThreshold;
-       // angleCurrentLimits.SupplyTimeThreshold = Constants.Swerve.angleCurrentThresholdTime;
+        angleCurrentLimits.SupplyCurrentLowerTime = Constants.Swerve.angleCurrentThreshold;
+        angleCurrentLimits.SupplyCurrentLowerLimit = Constants.Swerve.angleCurrentThresholdTime;
 
         /* PID Config */
         Slot0Configs angleSlot0 = swerveAngleFXConfig.Slot0;

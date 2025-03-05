@@ -22,6 +22,7 @@ public class Swerve extends SubsystemBase {
     public SwerveDriveOdometry swerveOdometry;
     public SwerveModule[] mSwerveMods;
     public Pigeon2 gyro;
+    public static final double motorPowerPercentage = 0.1; // constant for keeping track of the motor power percentage, used on translation.getX() and getY() -Brenden
 
     public Swerve() {
         gyro = new Pigeon2(Constants.Swerve.pigeonID);
@@ -46,15 +47,15 @@ public class Swerve extends SubsystemBase {
         SwerveModuleState[] swerveModuleStates =
             Constants.Swerve.swerveKinematics.toSwerveModuleStates(
                 fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(
-                                    translation.getX() * 0.1, 
-                                    translation.getY() * 0.1, 
+                                    translation.getX() * motorPowerPercentage, 
+                                    translation.getY() * motorPowerPercentage, 
                                     rotation, 
                                     getPose().getRotation()
                                 )
                                 : new ChassisSpeeds(
                                     translation.getX(), 
                                     translation.getY(), 
-                                    Math.pow(rotation, 2) * 0.3)
+                                    Math.pow(rotation, 2) * 0.1)
                                 );
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
 
