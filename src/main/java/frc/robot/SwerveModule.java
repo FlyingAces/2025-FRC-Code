@@ -6,6 +6,7 @@ import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -32,6 +33,9 @@ public class SwerveModule {
 
     /* angle motor control requests */
     private final PositionVoltage anglePosition = new PositionVoltage(0);
+    private final DutyCycleOut angleDutyCycleOut = new DutyCycleOut(0.0);
+
+    private final PIDController turnPID = new PIDController(0.1, 0.0, 0.0);
 
     public SwerveModule(int moduleNumber, SwerveModuleConstants moduleConstants){
         this.moduleNumber = moduleNumber;
@@ -44,6 +48,7 @@ public class SwerveModule {
         /* Angle Motor Config */
         mAngleMotor = new TalonFX(moduleConstants.angleMotorID);
         configAngleMotor();
+        turnPID.enableContinuousInput(-180, 180);
 
         /* Drive Motor Config */
         mDriveMotor = new TalonFX(moduleConstants.driveMotorID);
@@ -75,14 +80,19 @@ public class SwerveModule {
 
     private void setAngle(SwerveModuleState desiredState){
         Rotation2d angle = (Math.abs(desiredState.speedMetersPerSecond) <= (Constants.Swerve.maxSpeed * 0.01)) ? lastAngle : desiredState.angle; //Prevent rotating module if speed is less then 1%. Prevents Jittering.
-        
-        anglePosition.Position = Conversions.degreesToTalon(angle.getDegrees(), Constants.Swerve.angleGearRatio); // what angles should we point at
-        mAngleMotor.setControl(anglePosition); // move the motor to that angle using magic (PID)
+        if(moduleNumber == 1) {
+            System.out.println(angle.getDegrees());
+            System.out.println(getCANcoder().getDegrees());
+        }
+        //anglePosition.Position = Conversions.degreesToTalon(angle.getDegrees(), Constants.Swerve.angleGearRatio); // what angles should we point at
+        //mAngleMotor.setControl(anglePosition); // move the motor to that angle using magic (PID)
+        double turnPower = -turnPID.calculate(getCANcoder().getDegrees(), angle.getDegrees());
+        mAngleMotor.setControl(angleDutyCycleOut.withOutput(turnPower));
         lastAngle = angle;
     }
 
     private Rotation2d getAngle(){
-        return Rotation2d.fromDegrees(Conversions.talonToDegrees(mAngleMotor.getPosition().getValueAsDouble(), Constants.Swerve.angleGearRatio));
+        return Rotation2d.fromDegrees(getCANcoder().getDegrees());
     }
 
     public Rotation2d getCANcoder(){
@@ -105,7 +115,7 @@ public class SwerveModule {
 
     private void configAngleMotor(){
         mAngleMotor.getConfigurator().apply(Robot.ctreConfigs.swerveAngleFXConfig);
-        //resetToAbsolute(); //// MIGHT NEED TO COMMENT IN/OUT
+        resetToAbsolute(); //might fix our issues, might need to comment out//
     }
 
     private void configDriveMotor(){
