@@ -6,10 +6,11 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.subsystems.Swerve;
+import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.CommandSwerveDrivetrain;
 
 public class simpleAuto  extends SequentialCommandGroup {
-    public simpleAuto(Swerve s_Swerve){
+    public simpleAuto(CommandSwerveDrivetrain s_Swerve){
     addRequirements(s_Swerve);
     addCommands(
         

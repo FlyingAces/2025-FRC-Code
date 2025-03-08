@@ -10,6 +10,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 //import frc.lib.util.COTSFalconSwerveConstants;
 import frc.lib.util.SwerveModuleConstants;
 
@@ -17,7 +18,7 @@ public final class Constants {
     public static final double stickDeadband = 0.1;
     public static final double turnMult = 0.3;
     //motor for the climber
-    public static final int  ARM_MOTOR_ID = 14;
+    public static final int  ELEVATOR_MOTOR_ID = 14;
    // public static final double AUTO_UP_TIME = 6;
     
     //motor for intake
@@ -37,6 +38,8 @@ public final class Constants {
         public static final double wheelBase = Units.inchesToMeters(23.5); //TODO: This must be tuned to specific robot
         public static final double wheelCircumference = 3.95 * Math.PI;
         
+        //Controller        
+ public static final CommandXboxController driver = new CommandXboxController(0);
 
         /* Swerve Kinematics 
          * No need to ever change this unless you are not doing a traditional rectangular/square 4 module swerve */

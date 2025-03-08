@@ -27,7 +27,7 @@ public class IntakeSubsystem{
         intakeMotor.configReverseLimitSwitchSource(
             LimitSwitchSource.FeedbackConnector, // Use limit switch connected to the feedback connector
             LimitSwitchNormal.NormallyOpen,      // Assume the limit switch is normally open
-            0);                                // Timeout in milliseconds (0 for no timeout)
+            0);                                // Timeout in milliseconds (0 for no timeout) 
     }
     public static IntakeSubsystem getInstance(){
 		if(_instance == null)
